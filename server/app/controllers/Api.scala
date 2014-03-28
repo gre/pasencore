@@ -76,6 +76,8 @@ object Api extends Controller {
           q.delay.map{ d => DateTime.now.plusMonths(d.toInt)  }.getOrElse(DateTime.now)
         }
 
+        play.Logger.debug(release.toString())
+
         Submission.create(q.id, user.id, uuid, release)
       }.getOrElse( Future.failed( new RuntimeException("Invalid Question") ) )
     } yield idVideo
@@ -83,6 +85,11 @@ object Api extends Controller {
     created.map {
       case Some(id) => Ok( Json.obj("id" -> id) )
       case _        => BadRequest("Failed to insert")
+    }.recover {
+      case e: Exception => {
+        play.Logger.error("Failed " + e.toString)
+        BadRequest("Failed to insert")
+      }
     }
   }
 
