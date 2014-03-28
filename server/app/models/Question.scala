@@ -18,8 +18,7 @@ case class Question(
 case class TempQuestion(
   text:     String,
   delay:    Option[Long],
-  closed:   Option[DateTime],
-  idUser:   Long
+  closed:   Option[DateTime]
 )
 
 object TempQuestion{
@@ -48,7 +47,7 @@ object Question{
         }
     }
 
-    def create(question: TempQuestion): Future[Option[Long]] = Future{
+    def create(userId: Long, question: TempQuestion): Future[Option[Long]] = Future{
         DB.withConnection { implicit c =>
           SQL(
               """
@@ -56,7 +55,7 @@ object Question{
                     VALUES ( {idUser}, {text}, {created}, {delay}, {closed} )
               """
           ).onParams(
-            question.idUser,
+            userId,
             question.text,
             DateTime.now,
             question.delay,
