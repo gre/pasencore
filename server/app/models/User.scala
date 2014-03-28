@@ -2,6 +2,9 @@ package models
 
 import play.api.libs.json._
 
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+
 case class User(id: Long, name: String)
 
 object User{
@@ -21,27 +24,27 @@ object User{
         }
     }
 
-    def create(name: String): Option[Long] = DB.withConnection { implicit c =>
+    def create(name: String): Future[Option[Long]] = DB.withConnection { implicit c => Future{
         SQL(
             """
                 INSERT INTO USER (name) VALUES ({name})
             """
         ).onParams(name).executeInsert(scalar[Long].singleOpt)
-    }
+    }}
 
-    def users: Option[User] = DB.withConnection { implicit c =>
+    def users: Future[Option[User]] = DB.withConnection { implicit c => Future {
         SQL(
             """
                 SELECT * FROM USER
             """
         ).as(userParser*).headOption
-    }
+    }}
 
-    def user(name: String): Option[User] = DB.withConnection { implicit c =>
+    def user(name: String): Future[Option[User]] = DB.withConnection { implicit c => Future {
         SQL(
             """
                 SELECT * FROM USER WHERE name = {name}
             """
         ).onParams(name).as(userParser*).headOption
-    }
+    }}
 }

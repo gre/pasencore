@@ -6,9 +6,9 @@ GET     /                           controllers.Application.index()
 GET     /question/new               controllers.Application.newQuestion()
 POST    /question/postNew           controllers.Application.postNewQuestion()
 
-POST    /api/users/:name            controllers.Application.createUser(name: String)
-GET     /api/users                  controllers.Application.users()
-GET     /api/users/:name            controllers.Application.user(name: String)
+POST    /api/users/:name            controllers.Api.createUser(name: String)
+GET     /api/users                  controllers.Api.users()
+GET     /api/users/:name            controllers.Api.user(name: String)
 
 
 # Map static resources from the /public folder to the /assets URL path
