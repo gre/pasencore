@@ -34,4 +34,17 @@ object Api extends Controller {
     }
   }
 
+  def createQuestion = Action.async(parse.json) { request =>
+    Question.create( request.body.as[TempQuestion] ).map {
+      case Some(id) => Ok( Json.obj("id" -> id) )
+      case _        => BadRequest("Failed to insert")
+    }
+  }
+
+  def questions = Action.async {
+    Question.questions.map { questions =>
+      Ok( Json.toJson(questions) )
+    }
+  }
+
 }

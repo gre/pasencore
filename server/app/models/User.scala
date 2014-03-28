@@ -24,27 +24,33 @@ object User{
         }
     }
 
-    def create(name: String): Future[Option[Long]] = DB.withConnection { implicit c => Future{
-        SQL(
-            """
-                INSERT INTO USER (name) VALUES ({name})
-            """
-        ).onParams(name).executeInsert(scalar[Long].singleOpt)
-    }}
+    def create(name: String): Future[Option[Long]] = Future{
+        DB.withConnection { implicit c =>
+            SQL(
+                """
+                    INSERT INTO USER (name) VALUES ({name})
+                """
+            ).onParams(name).executeInsert(scalar[Long].singleOpt)
+        }
+    }
 
-    def users: Future[Option[User]] = DB.withConnection { implicit c => Future {
-        SQL(
-            """
-                SELECT * FROM USER
-            """
-        ).as(userParser*).headOption
-    }}
+    def users: Future[Option[User]] = Future {
+        DB.withConnection { implicit c =>
+            SQL(
+                """
+                    SELECT * FROM USER
+                """
+            ).as(userParser*).headOption
+        }
+    }
 
-    def user(name: String): Future[Option[User]] = DB.withConnection { implicit c => Future {
-        SQL(
-            """
-                SELECT * FROM USER WHERE name = {name}
-            """
-        ).onParams(name).as(userParser*).headOption
-    }}
+    def user(name: String): Future[Option[User]] = Future {
+        DB.withConnection { implicit c =>
+            SQL(
+                """
+                    SELECT * FROM USER WHERE name = {name}
+                """
+            ).onParams(name).as(userParser*).headOption
+        }
+    }
 }

@@ -11,5 +11,9 @@ GET     /api/users                  controllers.Api.users()
 GET     /api/users/:name            controllers.Api.user(name: String)
 
 
+POST    /api/questions              controllers.Api.createQuestion
+GET     /api/questions              controllers.Api.questions
+
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
