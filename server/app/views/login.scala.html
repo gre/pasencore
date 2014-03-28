@@ -2,26 +2,86 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>PasEncore</title>
-    <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700,600,500' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="/assets/vendors/font-awesome-4.0.3/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="/assets/vendors/semantic/packaged/css/semantic.min.css" />
-    <link rel="stylesheet" href="/assets/bundle.css" />
-    <script src="/assets/RecordRTC.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  </head>
-  <body>
-    <div id="wrapper">
-      <div class="ui menu">
-        <a class="item" href="/" style="padding-left: 30%"><i class="time large icon"></i> PasEncore</a>
+<head>
+  <meta charset="UTF-8">
+  <title>PasEncore</title>
+  <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700,600,500' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/assets/vendors/font-awesome-4.0.3/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/assets/vendors/semantic/packaged/css/semantic.min.css" />
+  <link rel="stylesheet" href="/assets/bundle.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+</head>
+<body>
+  <div id="wrapper">
+    
+
+    <div class="ui menu">
+      <a class="item" href="/"><i class="large question icon"></i> Questions</a>
+      <a class="item" href="/replies"><i class="large chat outline icon"></i> Replies</a>
+      <a class="item" href="/" style="padding-left: 30%; font-size:21px; color: #564F8A">PasEncore</a>
+      <div class="right menu">
+        <a class="item">Login</a>
+        <a class="item">Sign Up</a>
       </div>
     </div>
 
-    @helper.form(action = routes.Application.login) {
-      <input type="text" placeholder="Name" name="name">
-      <button type="submit">Log</button>
-    }
-  </body>
+    <h1 align=center class="help-title">Login</h1>
+    <div class="new-question-form">
+      <div class="ui form">
+          <div class="field">
+            <label>Username</label>
+            <div class="ui left labeled icon input">
+              <input type="text" id="username-input">
+              <i class="user icon"></i>
+             
+            </div>
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <div class="ui left labeled icon input">
+              <input type="password" id="password-input">
+              <i class="lock icon"></i>
+              
+            </div>
+          </div>
+       
+        <div class="ui purple submit button" onclick="login()" style="display:block"> <i class="large sign in icon"></i> Login</div>
+      </div>
+    </div>
+
+    <script>
+      function login() {
+        console.log("in login");
+        var username  = $("#username-input").val(),
+            password  = $("#password-input").val(),
+            url       = "/login",
+            data          = {
+              name: username
+            };
+            console.log("after vars");
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: JSON.stringify(data),
+          success: function(success) {
+            console.log("hey, success", success);
+            window.location = "/";
+          },
+          error: function(error) {
+            console.log("hey, error", error);
+            window.location = "/";
+          },
+          contentType:"application/json; charset=utf-8",
+          dataType: "json"
+        });
+        console.log("in login end");
+      }
+    </script>
+
+  </div>
+    <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="/assets/bundle.js"></script>
+    <script src="/assets/vendors/semantic/packaged/javascript/semantic.min.js"></script>
+</body>
 </html>
+

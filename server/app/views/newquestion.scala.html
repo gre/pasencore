@@ -1,4 +1,4 @@
-@()
+@(user: Option[models.User])
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,8 +20,13 @@
       <a class="item" href="/replies"><i class="large chat outline icon"></i> Replies</a>
       <a class="item" href="/" style="padding-left: 30%; font-size:21px; color: #564F8A">PasEncore</a>
       <div class="right menu">
-        <a class="item">Login</a>
-        <a class="item">Sign Up</a>
+        @user.map { u =>
+            <a class="item">Welcome, <b>@u.name</b></ap>
+            <a class="item" href="/logout">Logout</a>
+        }.getOrElse {
+            <a class="item" href="/login">Login</a>
+            <a class="item">Sign Up</a>
+        }
       </div>
     </div>
 

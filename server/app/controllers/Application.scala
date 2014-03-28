@@ -27,16 +27,17 @@ object Application extends Controller {
   }
 
 
-  def index () = Action.async {
+  def index () = Action.async { implicit request =>
+
     Question.questions.map { list =>
-        Ok(views.html.index(list))
+        Ok(views.html.index(list, user))
     }
   }
 
   def loginPage () = Action { Ok(views.html.login()) }
 
-  def newQuestion() = Action {
-    Ok(views.html.newquestion())
+  def newQuestion() = Action { implicit request =>
+    Ok(views.html.newquestion(user))
   }
 
   def postNewQuestion() = Action {
@@ -58,5 +59,9 @@ object Application extends Controller {
       }
       case _      =>  Redirect(routes.Application.loginPage)
     }
+  }
+
+  def logout() = Action {
+    Redirect(routes.Application.index).withNewSession
   }
 }

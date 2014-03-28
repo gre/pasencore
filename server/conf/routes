@@ -5,6 +5,7 @@
 GET     /                           controllers.Application.index()
 GET     /login                      controllers.Application.loginPage()
 POST    /login                      controllers.Application.login()
+GET     /logout                     controllers.Application.logout()
 GET     /question/new               controllers.Application.newQuestion()
 POST    /question/postNewQuestion   controllers.Application.postNewQuestion()
 
