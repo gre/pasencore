@@ -5,15 +5,128 @@
 <head>
   <meta charset="UTF-8">
   <title>PasEncore</title>
-  <link rel="stylesheet" href="/assets/bundle.css" />
+  <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700,600,500' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="/assets/vendors/font-awesome-4.0.3/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/assets/vendors/semantic/packaged/css/semantic.min.css" />
+  <link rel="stylesheet" href="/assets/bundle.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 </head>
 <body>
   <div id="wrapper">
-    <h1>PasEncore</h1>
+    
+
+    <div class="ui menu">
+      <a class="item" href="/questions"><i class="large question icon"></i> Questions</a>
+      <a class="item" href="/replies"><i class="large chat outline icon"></i> Replies</a>
+        <a class="item" href="/" style="padding-left: 30%"><i class="time large icon"></i> PasEncore</a>
+      <div class="right menu">
+        <a class="item">Login</a>
+        <a class="item">Sign Up</a>
+      </div>
+    </div>
+
+    <!-- Questions list -->
+    <h1 align=center class="help-title">Click on a question to record an answer</h1>
+    <div class=" questions" style="width: 1040px; margin: 0 auto;">
+        <div class="user-question">
+          <div class="content">
+            An excellent companion An excellent companion An excellent companion An excellent companion An excellent companion?
+          </div>
+        </div>
+        <div class="user-question">
+          <div class="content">
+            A poodle, its pretty basic ?
+          </div>
+        </div>
+        <div class="user-question">
+          <div class="content">
+            He's also a dog, hey, hey ? ??
+          </div>
+        </div>
+    </div>
+
+    <!-- Reply modal -->
+    <div class="ui basic modal">
+      <i class="close icon"></i>
+      <div class="header">
+        Record Answer
+      </div>
+      <div class="content">
+        <div class="left">
+          <video autoplay></video>
+
+              <script language="javascript" type="text/javascript">
+              function onVideoFail(e) {
+                  console.log('webcam fail!', e);
+                };
+
+              function hasGetUserMedia() {
+                // Note: Opera is unprefixed.
+                return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
+                          navigator.mozGetUserMedia || navigator.msGetUserMedia);
+              }
+
+              window.URL = window.URL || window.webkitURL;
+                    navigator.getUserMedia  = navigator.getUserMedia || 
+                                             navigator.webkitGetUserMedia ||
+                                              navigator.mozGetUserMedia || 
+                                               navigator.msGetUserMedia;
+
+                    var video = document.querySelector('video');
+                    var streamRecorder;
+                    var webcamstream;
+
+
+              function startRecording() {
+                    if (hasGetUserMedia()) {
+                      // Good to go!
+                    } else {
+                      alert('getUserMedia() is not supported in your browser');
+                    }
+
+                    
+                    if (navigator.getUserMedia) {
+                      navigator.getUserMedia({audio: true, video: true}, function(stream) {
+                        video.src = window.URL.createObjectURL(stream);
+                        webcamstream = stream;
+                        streamrecorder = webcamstream.record();
+                      }, onVideoFail);
+                    } else {
+                        alert ('failed');
+                    }
+
+                  
+                  //setTimeout(stopRecording, 10000);
+              }
+              function stopRecording() {
+                  streamRecorder.getRecordedData(postVideoToServer);
+              }
+              function postVideoToServer(videoblob) {
+
+                 console.log("Posting video...");
+              }
+              function onUploadSuccess() {
+                  alert ('video uploaded');
+              }
+
+              </script>
+        </div>
+        <div class="right">
+          Content can appear on right
+        </div>
+      </div>
+      <div class="ui green button" onclick="startRecording();">Record</div>
+      <div class="actions">
+        <div class="ui red button" onclick="stopRecording();">Cancel</div>
+        
+      </div>
+    </div>
+
+
   </div>
-  <script src="/assets/bundle.js"></script>
+    <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="/assets/bundle.js"></script>
+    <script src="/assets/vendors/semantic/packaged/javascript/semantic.min.js"></script>
 </body>
 </html>
 

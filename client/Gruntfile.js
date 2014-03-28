@@ -4,10 +4,6 @@ module.exports = function (grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    jshint: {
-      options: grunt.file.readJSON('.jshintrc'),
-      src: ['src/**.js']
-    },
     uglify: {
       prod: {
         src: 'tmp/bundle-before-min.js',
@@ -40,7 +36,7 @@ module.exports = function (grunt) {
     watch: {
       js: {
         files: ['src/**/*.js', 'src/**/*.hbs'],
-        tasks: ['jshint', 'browserify:app']
+        tasks: ['browserify:app']
       },
       css: {
         files: ['src/**/*.styl'],
@@ -51,6 +47,6 @@ module.exports = function (grunt) {
 
 
   grunt.registerTask('default', ['build', 'watch']);
-  grunt.registerTask('build', ['jshint', 'browserify:app', 'stylus:app']);
-  grunt.registerTask('build-prod', ['jshint', 'browserify:prod', 'uglify', 'stylus:app']);
+  grunt.registerTask('build', ['browserify:app', 'stylus:app']);
+  grunt.registerTask('build-prod', ['browserify:prod', 'uglify', 'stylus:app']);
 };
