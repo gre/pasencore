@@ -92,6 +92,7 @@ $stop.click(function() {
 });
 
 $submit.click(function () {
+  $submitting.hide();
   blobPromise
     .then(submitVideo("/api/video/"+currentQuestionId))//, audioVideoRecorder.getBlob())
     .fin(hideModal);
