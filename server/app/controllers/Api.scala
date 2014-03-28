@@ -67,12 +67,11 @@ object Api extends Controller {
 def saveVideo(idQuestion: Long) = Action.async(parse.temporaryFile) { request =>
     var user = currentUser(request).get
     val uuid = java.util.UUID.randomUUID().toString() + ".webm"
+    request.body.moveTo(new java.io.File(s"$filesPath/$idQuestion/$uuid"))
 
     val created = for {
       question <- Question.question(idQuestion)
       idVideo  <- question.map { q: Question =>
-        request.body.moveTo(new java.io.File(s"$filesPath/$idQuestion/$uuid"))
-
         val release = q.closed.getOrElse {
           q.delay.map{ d => DateTime.now.plusMonths(d.toInt)  }.getOrElse(DateTime.now)
         }
