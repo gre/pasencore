@@ -14,6 +14,7 @@ import models._
 import play.api.Play.current
 
 object Api extends Controller {
+  val filesPath = "../data/files"
 
   def createUser(name: String) = Action.async {
     User.create(name).map {
@@ -51,6 +52,13 @@ object Api extends Controller {
     Question.question(id).map { questions =>
       Ok( Json.toJson(questions) )
     }
+  }
+
+  def saveVideo(id: Long) = Action(parse.temporaryFile) { request =>
+    val uuid = java.util.UUID.randomUUID().toString()
+    request.body.moveTo(new java.io.File(s"$filesPath/$id/$uuid"))
+
+    Ok(uuid)
   }
 
 }
