@@ -13,6 +13,7 @@ GET     /api/users/:name            controllers.Api.user(name: String)
 
 POST    /api/questions              controllers.Api.createQuestion
 GET     /api/questions              controllers.Api.questions
+GET     /api/questions/:id          controllers.Api.question(id: Long)
 
 
 # Map static resources from the /public folder to the /assets URL path

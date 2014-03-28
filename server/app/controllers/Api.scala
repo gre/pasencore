@@ -47,4 +47,10 @@ object Api extends Controller {
     }
   }
 
+  def question(id: Long) = Action.async {
+    Question.question(id).map { questions =>
+      Ok( Json.toJson(questions) )
+    }
+  }
+
 }
