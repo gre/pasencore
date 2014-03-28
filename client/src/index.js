@@ -4,7 +4,7 @@ var Qajax = require("qajax");
 var $ = window.jQuery;
 var RecordRTC = window.RecordRTC;
 
-var FIX_VIDEO_DURATION = 1500;
+var FIX_VIDEO_DURATION = 2000;
 
 var captureUserMedia = require("./captureUserMedia");
 
@@ -27,15 +27,19 @@ function hideModal () {
   $submitting.hide();
 }
 
-function submitVideo (url, blob) {
-  var d = Q.defer();
-  var oReq = new XMLHttpRequest();
-  oReq.open("POST", url, true);
-  oReq.onload = d.resolve;
-  oReq.onerror = d.reject;
-  oReq.send(blob);
-  return d.promise;
+function submitVideo (url) {
+  return function (blob) {
+    var d = Q.defer();
+    var oReq = new XMLHttpRequest();
+    oReq.open("POST", url, true);
+    oReq.onload = d.resolve;
+    oReq.onerror = d.reject;
+    oReq.send(blob);
+    return d.promise;
+  };
 }
+
+var blobPromise;
 
 $record.click(function () {
   $record.hide();
@@ -50,9 +54,29 @@ $record.click(function () {
   });
 });
 
+function stopRecording () {
+  var d = Q.defer();
+  audioVideoRecorder.stopRecording(d.resolve);
+  return d.promise;
+}
+
 $stop.click(function() {
   $stop.hide();
+  $recording.hide();
+  $submitting.show();
   $video[0].src = "";
+  blobPromise =
+    Q.delay(FIX_VIDEO_DURATION)
+    .then(stopRecording)
+    .then(function (url) {
+      $video.removeAttr("autoplay");
+      $video.attr("controls", "controls");
+      $video[0].volume = 1;
+      $video[0].src = url;
+      return audioVideoRecorder.getBlob();
+    });
+
+  /*
   setTimeout(function () {
     audioVideoRecorder.stopRecording(function(url) {
       $video.removeAttr("autoplay");
@@ -64,10 +88,12 @@ $stop.click(function() {
     $recording.hide();
     $submitting.show();
   }, FIX_VIDEO_DURATION);
+  */
 });
 
 $submit.click(function () {
-  submitVideo("/api/video/"+currentQuestionId, audioVideoRecorder.getBlob())
+  blobPromise
+    .then(submitVideo("/api/video/"+currentQuestionId))//, audioVideoRecorder.getBlob())
     .fin(hideModal);
 });
 $cancel.click(hideModal);
