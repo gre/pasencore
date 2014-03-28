@@ -48,14 +48,36 @@
 
     <script>
       function submitQuestion() {
-        var delay         = $("#delay-input"),
-            specificdate  = $("#specificdate-input"),
-            question      = $("#question-input");
+        var delay         = $("#delay-input").val(),
+            specificdate  = $("#specificdate-input").val(),
+            question      = $("#question-input").val(),
+            url           = "/api/questions",
+            data          = {
+              text: question,
+              delay: parseInt(delay),
+              closed: specificdate,
+              idUser: 1
+            };
 
+            if(specificdate === "") {
+              delete data.closed;
+            }
 
-        console.log("delay is " + delay.val());
-        console.log("specificdate is " + specificdate.val());
-        console.log("question is " + question.val());
+            if(delay === "") {
+              delete data.delay;
+            }
+
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: JSON.stringify(data),
+          success: function(success) {
+            window.location = "/";
+          },
+          contentType:"application/json; charset=utf-8",
+          dataType: "json"
+        });
+
       }
     </script>
 

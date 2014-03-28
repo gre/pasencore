@@ -11,9 +11,15 @@ import scala.util._
 
 import play.api.Play.current
 
+import models.Question
+
 object Application extends Controller {
 
-  def index () = Action { Ok(views.html.index()) }
+  def index () = Action.async { 
+    Question.questions.map { list =>
+        Ok(views.html.index(list)) 
+    }
+  }
 
   def newQuestion() = Action {
     Ok(views.html.newquestion())

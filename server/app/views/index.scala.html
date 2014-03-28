@@ -1,4 +1,4 @@
-@()
+@(questions: Seq[models.Question])
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,41 +29,19 @@
     <!-- Questions list -->
     <h1 align=center class="help-title">Click on a question to record an answer</h1>
     <div class=" questions" style="width: 1040px; margin: 0 auto;">
-        <div class="user-question" data-id="0">
-            <div class="question-quote">
-                <i class="mini quote left icon" ></i>
+        @println(questions)
+        @questions.map { q =>
+            <div class="user-question" data-id="@q.id">
+                <div class="question-quote">
+                    <i class="mini quote left icon" ></i>
+                </div>
+                
+              <div class="content">
+                @q.text
+              </div>
+              
             </div>
-            
-          <div class="content">
-            An excellent companion An excellent companion An excellent companion An excellent companion An excellent companion
-          </div>
-          
-        </div>
-        <div class="user-question" data-id="1">
-            <div class="question-quote">
-                <i class="mini quote left icon" ></i>
-            </div>
-          <div class="content">
-            A poodle, its pretty basic ?
-          </div>
-        </div>
-
-        <div class="user-question" data-id="2">
-        <div class="question-quote">
-            <i class="mini quote left icon" ></i>
-        </div>
-        <div class="content">
-          A poodle, its pretty basic ?
-        </div>
-      </div>
-      <div class="user-question" data-id="3">
-        <div class="question-quote">
-            <i class="mini quote left icon" ></i>
-        </div>
-        <div class="content">
-          He's also a dog, hey, hey ? ??
-        </div>
-      </div>
+        }
       <div class="add-question button purple ui">
         <a class="content" href="@routes.Application.newQuestion()">
           <i class="large add icon"></i> POST NEW QUESTION
