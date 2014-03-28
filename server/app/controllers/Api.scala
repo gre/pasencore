@@ -54,8 +54,8 @@ object Api extends Controller {
     }
   }
 
-  def saveVideo(id: Long) = Action(parse.temporaryFile) { request =>
-    val uuid = java.util.UUID.randomUUID().toString()
+def saveVideo(id: Long) = Action(parse.temporaryFile) { request =>
+    val uuid = java.util.UUID.randomUUID().toString() + ".webm"
     request.body.moveTo(new java.io.File(s"$filesPath/$id/$uuid"))
 
     Ok(uuid)
