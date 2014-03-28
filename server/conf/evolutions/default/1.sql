@@ -15,7 +15,8 @@ CREATE TABLE QUESTION (
   delay            BIGINT(20)     ,
   closed           DATETIME       ,
 
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  FOREIGN KEY (id_user)     REFERENCES USER(id)
 );
 
 CREATE TABLE SUBMISSION (
