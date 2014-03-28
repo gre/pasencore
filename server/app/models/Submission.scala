@@ -24,9 +24,9 @@ object Submission {
     import play.api.Play.current
     import play.api.db._
 
-    implicit val format = Json.format[Question]
+    implicit val format = Json.format[Submission]
 
-    val questionParser = {
+    val submissionParser = {
         get[Long]("SUBMISSION.id") ~
         get[Long]("SUBMISSION.id_question") ~
         get[DateTime]("SUBMISSION.release") ~
@@ -47,6 +47,32 @@ object Submission {
                     VALUES ( {idQuestion}, {idUser}, {fileName}, {release} )
               """
           ).onParams(idQuestion, idUser, fileName, release).executeInsert(scalar[Long].singleOpt)
+      }
+    }
+
+    def all = Future {
+        DB.withConnection { implicit c =>
+          SQL(
+              """
+                  SELECT SUBMISSION.*, USER.* FROM SUBMISSION
+                    INNER JOIN USER
+                      ON SUBMISSION.id_user = USER.id
+              """
+          ).as(submissionParser*)
+      }
+    }
+
+    def released(idQuestion: Long) = Future {
+        DB.withConnection { implicit c =>
+          SQL(
+              """
+                  SELECT SUBMISSION.*, USER.* FROM SUBMISSION
+                    INNER JOIN USER
+                      ON SUBMISSION.id_user = USER.id
+                    WHERE SUBMISSION.id_question = {id_question}
+                      AND SUBMISSION.release < {dateNow}
+              """
+          ).onParams(idQuestion, DateTime.now).as(submissionParser*)
       }
     }
 }
