@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="/assets/vendors/font-awesome-4.0.3/css/font-awesome.min.css" />
   <link rel="stylesheet" href="/assets/vendors/semantic/packaged/css/semantic.min.css" />
   <link rel="stylesheet" href="/assets/bundle.css" />
+  <script src="/assets/RecordRTC.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 </head>
 <body>
@@ -28,29 +29,27 @@
     <!-- Questions list -->
     <h1 align=center class="help-title">Click on a question to record an answer</h1>
     <div class=" questions" style="width: 1040px; margin: 0 auto;">
+      <div class="user-question" data-id="q01">
+        <div class="content">
+          An excellent companion An excellent companion An excellent companion An excellent companion An excellent companion?
+        </div>
+      </div>
+      <div class="user-question" data-id="q02">
+        <div class="content">
+          A poodle, its pretty basic ?
+        </div>
+      </div>
+      <div class="user-question" data-id="q03">
+        <div class="content">
+          He's also a dog, hey, hey ? ??
+        </div>
+      </div>
 
-        <div class="user-question">
-          <div class="content">
-            An excellent companion An excellent companion An excellent companion An excellent companion An excellent companion?
-          </div>
-        </div>
-        <div class="user-question">
-          <div class="content">
-            A poodle, its pretty basic ?
-          </div>
-        </div>
-        <div class="user-question">
-          <div class="content">
-            He's also a dog, hey, hey ? ??
-          </div>
-        </div>
-
-        <div class="add-question button purple ui">
-          <a class="content" href="@routes.Application.newQuestion()">
-            <i class="large add icon"></i> POST NEW QUESTION
-          </a>
-        </div>
-
+      <div class="add-question button purple ui">
+        <a class="content" href="@routes.Application.newQuestion()">
+          <i class="large add icon"></i> POST NEW QUESTION
+        </a>
+      </div>
     </div>
 
     <!-- Reply modal -->
@@ -61,75 +60,23 @@
       </h1>
       <div class="content">
         <div class="center" style="text-align: center;">
-          <video autoplay></video>
-
-              <script language="javascript" type="text/javascript">
-              function onVideoFail(e) {
-                  console.log('webcam fail!', e);
-                };
-
-              function hasGetUserMedia() {
-                // Note: Opera is unprefixed.
-                return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
-                          navigator.mozGetUserMedia || navigator.msGetUserMedia);
-              }
-
-              window.URL = window.URL || window.webkitURL;
-                    navigator.getUserMedia  = navigator.getUserMedia || 
-                                             navigator.webkitGetUserMedia ||
-                                              navigator.mozGetUserMedia || 
-                                               navigator.msGetUserMedia;
-
-                    var video = document.querySelector('video');
-                    var streamRecorder;
-                    var webcamstream;
-
-
-              function startRecording() {
-                    if (hasGetUserMedia()) {
-                      // Good to go!
-                    } else {
-                      alert('getUserMedia() is not supported in your browser');
-                    }
-
-                    
-                    if (navigator.getUserMedia) {
-                      navigator.getUserMedia({audio: true, video: true}, function(stream) {
-                        video.src = window.URL.createObjectURL(stream);
-                        webcamstream = stream;
-                        streamrecorder = webcamstream.record();
-                      }, onVideoFail);
-                    } else {
-                        alert ('failed');
-                    }
-
-                  
-                  //setTimeout(stopRecording, 10000);
-              }
-              function stopRecording() {
-                  streamRecorder.getRecordedData(postVideoToServer);
-              }
-              function postVideoToServer(videoblob) {
-
-                 console.log("Posting video...");
-              }
-              function onUploadSuccess() {
-                  alert ('video uploaded');
-              }
-
-              </script>
+          <video id="webcamFeedback" autoplay style="height: 320px"></video>
+          <div class="recording">
+            <div id="record" class="ui button"><i class="red circle icon"></i> Record</div>
+            <div id="stop" class="ui red button" style="display:none">Stop</div>
+          </div>
+          <div class="submitting" style="display:none">
+            <div id="submit" class="ui green button">Submit</div>
+            <div id="cancel" class="ui red button">Cancel</div>
+          </div>
         </div>
-        
-      </div>
-      <div class="ui button" onclick="startRecording();"><i class="red circle icon"></i> Record</div>
-      
     </div>
 
 
   </div>
     <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
-    <script src="/assets/bundle.js"></script>
     <script src="/assets/vendors/semantic/packaged/javascript/semantic.min.js"></script>
+    <script src="/assets/bundle.js"></script>
 </body>
 </html>
 

@@ -22,7 +22,6 @@
     "matchdep": "~0.1.2",
     "grunt-browserify": "1.3.0",
     "browserify": "3.24.8",
-    "hbsfy": "1.0.0",
-    "jquery": "2.1.0"
+    "hbsfy": "1.0.0"
   }
 }
