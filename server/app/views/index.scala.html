@@ -14,7 +14,7 @@
 </head>
 <body>
   <div id="wrapper">
-    
+
 
     <div class="ui menu">
       <a class="item" href="/"><i class="large question icon"></i> Questions</a>
@@ -34,17 +34,16 @@
     <!-- Questions list -->
     <h1 align=center class="help-title">Click on a question to record an answer</h1>
     <div class=" questions" style="width: 1040px; margin: 0 auto;">
-        @println(questions)
         @questions.map { q =>
             <div class="user-question" data-id="@q.id">
                 <div class="question-quote">
                     <i class="mini quote left icon" ></i>
                 </div>
-                
+
               <div class="content">
                 @q.text
               </div>
-              
+
             </div>
         }
       <div class="add-question button purple ui">
@@ -55,7 +54,7 @@
       </div>
 
 
-      
+
     </div>
 
     <!-- Reply modal -->
