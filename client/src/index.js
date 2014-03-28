@@ -35,7 +35,7 @@ function submitVideo (url, blob) {
 
 $record.click(function () {
   $record.hide();
-  captureUserMedia.then(function(stream) {
+  captureUserMedia().then(function(stream) {
     $stop.show();
     $video.removeAttr("controls");
     $video.attr("autoplay", "autoplay");
