@@ -85,6 +85,7 @@ object Question{
                 SELECT QUESTION.*, USER.* FROM QUESTION
                   INNER JOIN USER
                     ON USER.id = QUESTION.id_user
+                  ORDER BY QUESTION.created DESC
             """
         ).as(questionParser*)
       }
