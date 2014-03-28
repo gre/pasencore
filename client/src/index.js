@@ -37,6 +37,9 @@ $record.click(function () {
   $record.hide();
   captureUserMedia.then(function(stream) {
     $stop.show();
+    $video.removeAttr("controls");
+    $video.attr("autoplay", "autoplay");
+    $video[0].volume = 0;
     $video[0].src = window.URL.createObjectURL(stream);
     audioVideoRecorder = RecordRTC(stream);
     audioVideoRecorder.startRecording();
@@ -48,7 +51,9 @@ $stop.click(function() {
   audioVideoRecorder.stopRecording(function(url) {
     $video.removeAttr("autoplay");
     $video.attr("controls", "controls");
+    $video[0].volume = 1;
     $video[0].src = url;
+    $
   });
   $recording.hide();
   $submitting.show();
@@ -67,8 +72,6 @@ $(".basic.modal").modal("setting", "onHide", function () {
   console.log("on hide");
   if (audioVideoRecorder) {
     audioVideoRecorder.stopRecording();
-    $video.removeAttr("controls");
-    $video.attr("autoplay", "autoplay");
     $video[0].src = null;
     audioVideoRecorder = null;
     console.log("STOP !!!");
