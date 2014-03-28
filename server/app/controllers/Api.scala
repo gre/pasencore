@@ -8,6 +8,7 @@ import play.api.libs.json._
 import play.api.libs.iteratee._
 import scala.concurrent.Future
 import scala.util._
+import org.joda.time.DateTime
 
 import models._
 
@@ -15,6 +16,14 @@ import play.api.Play.current
 
 object Api extends Controller {
   val filesPath = "../data/files"
+
+  def currentUser(implicit request: Request[_]): Option[User] = {
+    val session = request.session
+    for {
+      id    <- session.get("id")
+      name  <- session.get("name")
+    } yield ( User(id.toLong, name) )
+  }
 
   def createUser(name: String) = Action.async {
     User.create(name).map {
@@ -54,11 +63,27 @@ object Api extends Controller {
     }
   }
 
-def saveVideo(id: Long) = Action(parse.temporaryFile) { request =>
+def saveVideo(idQuestion: Long) = Action.async(parse.temporaryFile) { request =>
+    var user = currentUser(request).get
     val uuid = java.util.UUID.randomUUID().toString() + ".webm"
-    request.body.moveTo(new java.io.File(s"$filesPath/$id/$uuid"))
 
-    Ok(uuid)
+    val created = for {
+      question <- Question.question(idQuestion)
+      idVideo  <- question.map { q: Question =>
+        request.body.moveTo(new java.io.File(s"$filesPath/$idQuestion/$uuid"))
+
+        val release = q.closed.getOrElse {
+          q.delay.map{ d => DateTime.now.plusMonths(d.toInt)  }.getOrElse(DateTime.now)
+        }
+
+        Submission.create(q.id, user.id, uuid, release)
+      }.getOrElse( Future.failed( new RuntimeException("Invalid Question") ) )
+    } yield idVideo
+
+    created.map {
+      case Some(id) => Ok( Json.obj("id" -> id) )
+      case _        => BadRequest("Failed to insert")
+    }
   }
 
 }
