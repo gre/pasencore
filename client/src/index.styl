@@ -4,15 +4,20 @@
 
 body
     font-family 'Raleway', sans-serif
+    background-color whitesmoke
 
 
 .user-question, .add-question
-    border 1px solid whitesmoke
+    background-color white
+    border 1px solid rgba(0, 0, 0, 0.1)
     margin-bottom 20px
     overflow auto
 
+.user-question
+    transition .2s
+
 .user-question:hover
-    background black
+    background gray
     color white
     cursor pointer
 
@@ -27,7 +32,10 @@ body
     a
         color white
         text-decoration none
-
+.question-quote
+    float left
+    margin-top 1.6%
+    margin-left 20px
 
 .content
     float left
