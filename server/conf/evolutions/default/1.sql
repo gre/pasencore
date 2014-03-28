@@ -27,7 +27,7 @@ CREATE TABLE SUBMISSION (
     comment       text            ,
 
     PRIMARY KEY (id),
-    FOREIGN KEY (id_question) REFERENCES QUESTION(id)
+    FOREIGN KEY (id_question) REFERENCES QUESTION(id),
     FOREIGN KEY (id_user)     REFERENCES USER(id)
 );
 

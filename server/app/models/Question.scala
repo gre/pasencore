@@ -3,7 +3,7 @@ package models
 import org.joda.time.DateTime
 
 case class Question(
-  id:       Int,
+  id:       Long,
   user:     User,
   text:     String,
   created:  DateTime,
