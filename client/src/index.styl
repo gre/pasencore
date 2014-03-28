@@ -6,14 +6,26 @@ body
     font-family 'Raleway', sans-serif
 
 
-.user-question
+.user-question, .add-question
     border 1px solid whitesmoke
     margin-bottom 20px
     overflow auto
-    &:hover
-        background black
+
+.user-question:hover
+    background black
+    color white
+    cursor pointer
+
+.add-question:hover
+    cursor pointer
+    opacity 0.7
+
+.add-question
+    a
         color white
-        cursor pointer
+        text-decoration none
+
+
 .content
     float left
     width 89%
@@ -24,3 +36,9 @@ body
     text-transform uppercase
     margin 50px 0 50px 0
 
+.ui.basic.modal.visible
+    margin-top -300px !important
+
+.new-question-form
+    width 1040px
+    margin 0 auto

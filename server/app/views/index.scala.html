@@ -28,6 +28,7 @@
     <!-- Questions list -->
     <h1 align=center class="help-title">Click on a question to record an answer</h1>
     <div class=" questions" style="width: 1040px; margin: 0 auto;">
+
         <div class="user-question">
           <div class="content">
             An excellent companion An excellent companion An excellent companion An excellent companion An excellent companion?
@@ -43,16 +44,23 @@
             He's also a dog, hey, hey ? ??
           </div>
         </div>
+
+        <div class="add-question" style="background:red; color:white">
+          <a class="content" href="@routes.Application.newQuestion()">
+            <i class="large add icon"></i> POST NEW QUESTION
+          </a>
+        </div>
+
     </div>
 
     <!-- Reply modal -->
-    <div class="ui basic modal">
+    <div class="ui basic modal" style="text-align: center;">
       <i class="close icon"></i>
-      <div class="header">
+      <h1 class="help-title">
         Record Answer
-      </div>
+      </h1>
       <div class="content">
-        <div class="left">
+        <div class="center" style="text-align: center;">
           <video autoplay></video>
 
               <script language="javascript" type="text/javascript">
@@ -111,15 +119,10 @@
 
               </script>
         </div>
-        <div class="right">
-          Content can appear on right
-        </div>
-      </div>
-      <div class="ui green button" onclick="startRecording();">Record</div>
-      <div class="actions">
-        <div class="ui red button" onclick="stopRecording();">Cancel</div>
         
       </div>
+      <div class="ui button" onclick="startRecording();"><i class="red circle icon"></i> Record</div>
+      
     </div>
 
 

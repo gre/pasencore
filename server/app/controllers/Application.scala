@@ -16,4 +16,12 @@ object Application extends Controller {
   def index () = Action {
     Ok(views.html.index())
   }
+
+  def newQuestion() = Action {
+    Ok(views.html.newquestion())
+  }
+
+  def postNewQuestion() = Action {
+    Ok("posted question")
+  }
 }
