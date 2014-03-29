@@ -2,24 +2,26 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET     /                           controllers.Application.index()
-GET     /login                      controllers.Application.loginPage()
-POST    /login                      controllers.Application.login()
-GET     /logout                     controllers.Application.logout()
-GET     /question/new               controllers.Application.newQuestion()
-POST    /question/postNewQuestion   controllers.Application.postNewQuestion()
+GET     /                                           controllers.Application.index()
+GET     /login                                      controllers.Application.loginPage()
+POST    /login                                      controllers.Application.login()
+GET     /logout                                     controllers.Application.logout()
+GET     /question/new                               controllers.Application.newQuestion()
+POST    /question/postNewQuestion                   controllers.Application.postNewQuestion()
 
-POST    /api/users/:name            controllers.Api.createUser(name: String)
-GET     /api/users                  controllers.Api.users()
-GET     /api/users/:name            controllers.Api.user(name: String)
+POST    /api/users/:name                            controllers.Api.createUser(name: String)
+GET     /api/users                                  controllers.Api.users()
+GET     /api/users/:name                            controllers.Api.user(name: String)
 
 
-POST    /api/questions              controllers.Api.createQuestion
-GET     /api/questions              controllers.Api.questions
-GET     /api/questions/:id          controllers.Api.question(id: Long)
+POST    /api/questions                              controllers.Api.createQuestion
+GET     /api/questions                              controllers.Api.questions
+GET     /api/questions/:id                          controllers.Api.question(id: Long)
 
-POST    /api/video/:idQuestion      controllers.Api.saveVideo(idQuestion: Long)
+POST    /api/video/:idQuestion                      controllers.Api.saveVideo(idQuestion: Long)
+GET     /api/submissions                            controllers.Api.submissions
+GET     /api/submissions/:idQuestion/released       controllers.Api.released(idQuestion: Long)
 
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /assets/*file                               controllers.Assets.at(path="/public", file)

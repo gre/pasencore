@@ -64,7 +64,7 @@ object Api extends Controller {
     }
   }
 
-def saveVideo(idQuestion: Long) = Action.async(parse.temporaryFile) { request =>
+  def saveVideo(idQuestion: Long) = Action.async(parse.temporaryFile) { request =>
     var user = currentUser(request).get
     val uuid = java.util.UUID.randomUUID().toString() + ".webm"
     request.body.moveTo(new java.io.File(s"$filesPath/$idQuestion/$uuid"))
@@ -76,6 +76,8 @@ def saveVideo(idQuestion: Long) = Action.async(parse.temporaryFile) { request =>
           q.delay.map{ d => DateTime.now.plusMonths(d.toInt)  }.getOrElse(DateTime.now)
         }
 
+        play.Logger.debug(release.toString())
+
         Submission.create(q.id, user.id, uuid, release)
       }.getOrElse( Future.failed( new RuntimeException("Invalid Question") ) )
     } yield idVideo
@@ -83,6 +85,23 @@ def saveVideo(idQuestion: Long) = Action.async(parse.temporaryFile) { request =>
     created.map {
       case Some(id) => Ok( Json.obj("id" -> id) )
       case _        => BadRequest("Failed to insert")
+    }.recover {
+      case e: Exception => {
+        play.Logger.error("Failed " + e.toString)
+        BadRequest("Failed to insert")
+      }
+    }
+  }
+
+  def submissions = Action.async {
+    Submission.all.map { submissions =>
+      Ok( Json.toJson(submissions) )
+    }
+  }
+
+  def released(idQuestion: Long) = Action.async {
+    Submission.released(idQuestion).map { submissions =>
+      Ok( Json.toJson(submissions) )
     }
   }
 
